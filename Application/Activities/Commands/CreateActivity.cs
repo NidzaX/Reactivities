@@ -23,7 +23,7 @@ public class CreateActivity
 
             context.Activities.Add(activity);
 
-            await context.SaveChangesAsync(cancellationToken);
+            // await context.SaveChangesAsync(cancellationToken);
 
             var result = await context.SaveChangesAsync(cancellationToken) > 0;
 
