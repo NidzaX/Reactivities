@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { store } from "../store/store";
-import { toast } from "react-toastify";
-import { router } from "../../app/router/Routes";
+import { store } from '../store/store';
+import { toast } from 'react-toastify';
+import { router } from '../../app/router/Routes';
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -15,6 +15,7 @@ const agent = axios.create({
 });
 
 agent.interceptors.request.use((config) => {
+  console.log('Request payload:', config.data);
   store.uiStore.isBusy();
   return config;
 });
@@ -28,6 +29,9 @@ agent.interceptors.response.use(
   async (error) => {
     await sleep(1000);
     store.uiStore.isIdle();
+
+    console.error('Axios Error Response:', error.response);
+    console.error('Axios Error Config:', error.config);
 
     const { status, data } = error.response;
     switch (status) {
@@ -45,20 +49,20 @@ agent.interceptors.response.use(
         }
         break;
       case 401:
-        toast.error("Unauthorized");
+        toast.error('Unauthorized');
         break;
       case 404:
-        router.navigate("/not-found");
+        router.navigate('/not-found');
         break;
       case 500:
-        router.navigate("/server-error", { state: { error: data } });
+        router.navigate('/server-error', { state: { error: data } });
         break;
       default:
         break;
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default agent;
