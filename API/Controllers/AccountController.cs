@@ -14,7 +14,7 @@ public class AccountController(SignInManager<User> signInManager) : BaseApiContr
     {
         var user = new User
         {
-            UserName = registerDto.DisplayName,
+            UserName = registerDto.Email,
             Email = registerDto.Email,
             DisplayName = registerDto.DisplayName
         };
