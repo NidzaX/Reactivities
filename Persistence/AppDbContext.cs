@@ -6,8 +6,9 @@ namespace Persistence;
 
 public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
 {
-    public DbSet<Activity> Activities { get; set; }
+    public required DbSet<Activity> Activities { get; set; }
     public required DbSet<ActivityAttendee> ActivityAttendees { get; set; }
+    public required DbSet<Photo> Photos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
