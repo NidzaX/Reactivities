@@ -15,7 +15,9 @@ export default function PhotoUploadWidget({ uploadPhoto, loading }: Props) {
   const cropperRef = useRef<ReactCropperElement>(null);
 
   useEffect(() => {
-    files.forEach((file) => URL.revokeObjectURL(file.preview));
+    return () => {
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    };
   }, [files]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {

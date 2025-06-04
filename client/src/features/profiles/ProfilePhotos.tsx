@@ -22,7 +22,6 @@ export default function ProfilePhotos() {
 
   if (loadingPhoto) return <Typography>Loading photos...</Typography>;
 
-  if (!photos || photos.length === 0) return <Typography>No photos found for this user</Typography>;
   return (
     <Box>
       <Box display="flex" justifyContent="space-between">
@@ -34,7 +33,7 @@ export default function ProfilePhotos() {
         <PhotoUploadWidget uploadPhoto={handlePhotoUpload} loading={uploadPhoto.isPending} />
       ) : (
         <>
-          {photos.length === 0 ? (
+          {!photos || photos.length === 0 ? (
             <Typography>No photos added yet</Typography>
           ) : (
             <ImageList sx={{ height: 450 }} cols={6} rowHeight={164}>
